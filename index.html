@@ -188,13 +188,13 @@
 
     <div class="content-wrapper w-full max-w-6xl flex flex-col items-center">
         <!-- Header -->
-        <header class="text-center mb-12 relative">
+        <header class="text-center mb-12 relative w-full px-2">
             <span class="block text-[#D4AF37] text-xs tracking-[0.3em] uppercase mb-4 opacity-80">ZIRAN BEING</span>
-            <h1 class="text-4xl md:text-5xl font-bold tracking-widest text-[#Fdfbf7] mb-4" style="text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);">自然在・冬日能量療癒</h1>
-            <div class="flex items-center justify-center gap-4">
-                <div class="h-[1px] w-8 bg-[#D4AF37] opacity-50"></div>
-                <p class="text-[#b0bec5] text-sm tracking-wide font-light">讓身心在自然的流動中重新歸位</p>
-                <div class="h-[1px] w-8 bg-[#D4AF37] opacity-50"></div>
+            <h1 class="text-2xl sm:text-3xl md:text-5xl font-bold tracking-wider md:tracking-widest text-[#Fdfbf7] mb-4 leading-tight" style="text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);">自然在・冬日能量療癒</h1>
+            <div class="flex items-center justify-center gap-2 md:gap-4">
+                <div class="h-[1px] w-4 md:w-8 bg-[#D4AF37] opacity-50"></div>
+                <p class="text-[#b0bec5] text-xs md:text-sm tracking-wide font-light whitespace-nowrap">讓身心在自然的流動中重新歸位</p>
+                <div class="h-[1px] w-4 md:w-8 bg-[#D4AF37] opacity-50"></div>
             </div>
         </header>
 
@@ -328,14 +328,21 @@
                         </div>
                          <div class="p-3 bg-[#ffffff05] rounded col-span-2 md:col-span-1">
                             <span class="block text-[#D4AF37] text-xs mb-1">LOCATION</span>
-                            <span class="text-white font-bold">德藝生活教室</span>
+                            <span class="text-white font-bold">德藝生活教室 (小巨蛋旁)</span>
                         </div>
                     </div>
                     
-                    <div class="inline-block border border-[#D4AF37] rounded px-8 py-3 bg-[#D4AF37]/10 backdrop-blur-sm">
-                        <span class="text-[#Fdfbf7] font-serif tracking-widest text-lg">
-                            <span class="text-[#D4AF37] mr-2">✦</span>期待與您共度療癒時光<span class="text-[#D4AF37] ml-2">✦</span>
-                        </span>
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="inline-block border border-[#D4AF37] rounded px-8 py-3 bg-[#D4AF37]/10 backdrop-blur-sm">
+                            <span class="text-[#Fdfbf7] font-serif tracking-widest text-lg">
+                                <span class="text-[#D4AF37] mr-2">✦</span>期待與您共度療癒時光<span class="text-[#D4AF37] ml-2">✦</span>
+                            </span>
+                        </div>
+
+                        <a href="https://reurl.cc/2lKbVm" target="_blank" rel="noopener noreferrer" class="cta-btn px-8 py-3 rounded-full text-sm font-bold tracking-widest hover:scale-105 transition-transform flex items-center gap-2 group text-[#0F282F] no-underline">
+                            <span>填寫活動報名表</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
                     </div>
                 </div>
 
@@ -537,15 +544,20 @@
 
         function renderChart(scores) {
             const ctx = document.getElementById('wuxingChart').getContext('2d');
-            const dataValues = [scores.Wood, scores.Fire, scores.Earth, scores.Metal, scores.Water];
-            const labels = ['木 Wood', '火 Fire', '土 Earth', '金 Metal', '水 Water'];
+            
+            // Changed order to: Metal (金), Wood (木), Water (水), Fire (火), Earth (土)
+            const orderedKeys = ['Metal', 'Wood', 'Water', 'Fire', 'Earth'];
+
+            const dataValues = orderedKeys.map(key => scores[key]);
+            const labels = orderedKeys.map(key => elementNames[key]);
+            const bgColors = orderedKeys.map(key => elementColors[key]);
             
             const listContainer = document.getElementById('scoreList');
             listContainer.innerHTML = '';
             
             let total = 8; 
             
-            ['Wood', 'Fire', 'Earth', 'Metal', 'Water'].forEach((key) => {
+            orderedKeys.forEach((key) => {
                 const count = scores[key];
                 const pct = ((count / total) * 100).toFixed(0);
                 const li = document.createElement('li');
@@ -572,7 +584,7 @@
                     labels: labels,
                     datasets: [{
                         data: dataValues,
-                        backgroundColor: Object.values(elementColors),
+                        backgroundColor: bgColors,
                         borderWidth: 0,
                         hoverOffset: 10
                     }]
